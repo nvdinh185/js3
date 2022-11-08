@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript form validation</title>
+    <link rel='stylesheet' href='style.css' type='text/css' />
+    <script src="validation.js"></script>
+</head>
+
+<body>
+    <form action="" id="form-1">
+
+        <div class="form-group">
+            <label for="fullname" class="form-label">Fullname:</label>
+            <input type="text" name="fullname" id="fullname" class="form-control" placeholder="Nhập họ tên" />
+            <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Your email:</label>
+            <input type="text" name="email" id="email" class="form-control" placeholder="email@example.com" />
+            <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Nhập mật khẩu" />
+            <span class="form-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="repass" class="form-label">Comfirm password:</label>
+            <input type="password" name="repass" id="repass" class="form-control" placeholder="Nhập lại mật khẩu" />
+            <span class="form-message"></span>
+        </div>
+
+        <input type="submit" value="Đăng ký" class="form-submit" />
+
+    </form>
+
+    <script>
+        // Mong muốn của chúng ta
+        Validator({
+            form: "#form-1",
+            formGroupSelector: '.form-group',
+            errorSelector: ".form-message",
+            rules: [
+                Validator.isRequired("#fullname", "Vui lòng nhập tên đầy đủ của bạn"),
+                Validator.isRequired("#email", "Vui lòng nhập email"),
+                Validator.isEmail("#email"),
+                Validator.isRequired("#password"),
+                Validator.minLength("#password", 6),
+                Validator.isRequired("#repass"),
+                Validator.isConfirmed("#repass", function () {
+                    return document.querySelector("#form-1 #password").value;
+                }, "Mật khẩu nhập lại không chính xác")
+            ],
+            onSubmit: function (data) {
+                console.log(data);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
